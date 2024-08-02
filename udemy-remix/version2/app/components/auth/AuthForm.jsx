@@ -1,32 +1,32 @@
 import { FaLock, FaUserPlus } from 'react-icons/fa';
-import { Link, useSearchParams } from '@remix-run/react'
+import { Link, Form, useSearchParams, useNavigation } from '@remix-run/react'
 
 function AuthForm() {
   const [ searchParams ] = useSearchParams()
+  const nav = useNavigation()
   const authMode = searchParams.get('mode')
 
   const btnMode = authMode === 'login' ? 'login' : 'SignUp'
   const toogleMode = authMode === 'login' ? 'Create a new user' : 'Login into your account'
   const pathMode = authMode === 'login' ? 'signup' : 'login'
+  const isSubmitting = nav.state !== 'idle'
 
   return (
-    <form method="post" className="form" id="auth-form">
-      <div className="icon-img">
-        {authMode === 'login' ? <FaLock /> : <FaUserPlus /> }
-      </div>
+    <Form method="post" className="form" id="auth-form">
+      <div className="icon-img">{authMode === 'login' ? <FaLock /> : <FaUserPlus />}</div>
       <p>
         <label htmlFor="email">Email Address</label>
-        <input type="email" id="email" name="email" required />
+        <input type="text" id="email" name="email" />
       </p>
       <p>
         <label htmlFor="password">Password</label>
-        <input type="password" id="password" name="password" minLength={7} />
+        <input type="password" id="password" name="password" />
       </p>
       <div className="form-actions">
-        <button>{btnMode}</button>
+        <button disabled={isSubmitting}>{btnMode}</button>
         <Link to={`?mode=${pathMode}`}>{toogleMode}</Link>
       </div>
-    </form>
+    </Form>
   )
 }
 

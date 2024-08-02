@@ -1,24 +1,12 @@
-import { Link, Outlet } from '@remix-run/react'
-import React from 'react'
+import { Link, Outlet, useLoaderData } from '@remix-run/react'
 import ExpenseList from '../../components/expenses/ExpensesList'
 import { FaDownload, FaPlus } from 'react-icons/fa'
-
-const DUMMY_EXPENSES = [
-  {
-    id: 'e1',
-    title: 'First Expense',
-    amount: 12.99,
-    date: new Date().toISOString(),
-  },
-  {
-    id: 'e2',
-    title: 'Second Expense',
-    amount: 16.99,
-    date: new Date().toISOString(),
-  },
-]
+import { deleteExpense, getExpense } from 'mongo/expense.server'
+import { json } from '@remix-run/node'
 
 function ExpenseLayout() {
+  const data = useLoaderData()
+
   return (
     <>
       <Outlet />
@@ -27,11 +15,32 @@ function ExpenseLayout() {
           <FaPlus />
           <span>Add Expense</span>
         </Link>
-        <a href="/expense/raw"><FaDownload />Raw data</a>
+        <a href="/expense/raw">
+          <FaDownload />
+          Raw data
+        </a>
       </section>
-      <ExpenseList expenses={DUMMY_EXPENSES} />
+      <ExpenseList expenses={data} />
     </>
   )
+}
+
+// export function loader() {
+//   return getExpense()
+// }
+
+export async function loader() {
+  const rawData = await getExpense()
+  return json(rawData, { status: 200, statusText: 'Data Fetched' })
+}
+
+export async function action(ctx) {
+  if (ctx.request['method'] === 'DELETE') {
+      const formData = await ctx.request.formData()
+    const selectedId = formData.get('id')
+    return deleteExpense(selectedId)
+  }
+  return null
 }
 
 export default ExpenseLayout

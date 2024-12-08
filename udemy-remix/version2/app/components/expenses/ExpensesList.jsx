@@ -4,8 +4,8 @@ function ExpensesList({ expenses }) {
 
   return (
     <ol id="expenses-list">
-      {expenses.map((expense) => (
-        <li key={expense.id}>
+      {expenses.map((expense, i) => (
+        <li key={i}>
           <ExpenseListItem
             id={expense.id}
             title={expense.title}

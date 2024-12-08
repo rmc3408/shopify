@@ -6,9 +6,10 @@ function ExpenseForm() {
   const nav = useNavigation()
   
   const matches = useMatches()
+
   const selectedId = useParams().id
-  const expensesMatched = matches.find((exp) => exp.id === 'routes/__expenses/expense')
-  const expenseFound = expensesMatched.data.find((exp) => exp.id === selectedId)
+  const expensesMatched = matches.find((exp) => exp.id === 'routes/_expenses')
+  const expenseFound = expensesMatched.data?.find((exp) => exp.id === selectedId)
 
   const isSubmitting = nav.state !== 'idle'
   const values = expenseFound
@@ -19,7 +20,7 @@ function ExpenseForm() {
       }
     : {
         title: '',
-        amount: null,
+        amount: 0,
         date: null,
       }
 

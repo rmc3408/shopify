@@ -1,11 +1,13 @@
-import { Link, useLoaderData, useRouteError } from '@remix-run/react'
+import { useRouteLoaderData, useRouteError } from '@remix-run/react';
+import Error from '~/components/util/Error';
+import { json } from '@remix-run/node';
 import { getExpense } from 'mongo/expense.server'
 import Chart from '~/components/expenses/Chart'
 import ExpenseStatistics from '~/components/expenses/ExpenseStatistics'
 
 
 export default function ExpenseAnalysis() {
-  const expenses = useLoaderData()
+  const expenses = useRouteLoaderData('routes/_expenses')
 
   return (
     <main>

@@ -20,5 +20,5 @@ export async function action(ctx) {
   }
 
   await addExpense(newExpense)
-  return redirect('/expense')
+  return redirect('/expenses')
 }

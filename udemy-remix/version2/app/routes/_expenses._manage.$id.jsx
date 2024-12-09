@@ -1,9 +1,9 @@
 import { redirect } from '@remix-run/node'
 import { useNavigate } from '@remix-run/react'
 import { updateExpense } from 'mongo/expense.server'
-import { validateExpenseInput } from 'mongo/validation.server'
 import ExpenseForm from '~/components/expenses/ExpenseForm'
 import Modal from '~/components/util/Modal'
+import { validateExpenseInput } from '~/components/util/validation.server'
 
 export default function ExpenseId() {
   const navigate = useNavigate()

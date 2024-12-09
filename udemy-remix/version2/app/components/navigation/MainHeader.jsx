@@ -1,7 +1,18 @@
-import { Link, NavLink } from '@remix-run/react';
+import { Link, NavLink, Form } from '@remix-run/react';
 import Logo from '../util/Logo';
 
-function MainHeader() {
+function MainHeader({ userId }) {
+  const Login = (
+    <Link to="auth" className="cta">
+      Login
+    </Link>
+  )
+  const Logout = (
+    <Form method="post" action="/logout" className="form logout">
+      <button type="submit">Logout</button>
+    </Form>
+  )
+
   return (
     <header id="main-header">
       <Logo />
@@ -18,9 +29,7 @@ function MainHeader() {
       <nav id="cta-nav">
         <ul>
           <li>
-            <Link to="/auth" className="cta">
-              Login
-            </Link>
+            {userId ? Logout : Login}
           </li>
         </ul>
       </nav>

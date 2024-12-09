@@ -58,7 +58,7 @@ a {
 }
 
 main {
-  margin: 2rem auto;
+  margin: 6rem auto;
   max-width: 45rem;
 }
 
@@ -253,6 +253,14 @@ button {
 
 .form a:hover {
   color: var(--color-primary-100);
+}
+
+.form.logout {
+  padding: 0;
+
+  button {
+    font-size: unset;
+  }
 }
 
 @keyframes fade-slide-up {
